@@ -1,0 +1,24 @@
+language: python
+python:
+- '2.7'
+- '3.4'
+- '3.5'
+- '3.6'
+install:
+- pip install -r requirements.txt
+script:
+- python setup.py test
+
+jobs:
+  include:
+    - stage: deploy
+      script: skip
+      deploy: &pypi
+        provider: pypi
+        user: matwey
+        password:
+          secure: "RfRxufUBbCdSehvhaOqLDQnKNgsJy3VydESHPgotdKWHIo4Y18bfuXJbRSYnrJPxeoYf+LP1vi46Bn48KMKxP3tPV/wChhXzxJSLH0y16M2JceJs4YGQ2mKqSQzeLtobMlYGZPoc3Emy3d1PvSE+CLbulZ2aE3vteyetrhsTaKCi9K7ew9k/na5kIm5r8kzBQp1vAdh7Zm0DOrqqb+hyBr7RxwS0krPCs3hutIdlo4Ahj80b3FRvCbjxI4XYHSClkvhCX7IQK9aEc3ZmWKnKrWnGhbe3ZBDLnq+Hlr5ERcsqSHCTwYUocbhFpW2TbymL/cG7OMjO8QOMkvhKkeO5kcQ8mJJTbcPVsde8tzrYSk2j9yyIR74NCGR0ltfmB+K1q3pBhkAQ9eKAi6xMalyh9/Mgg8oEXpdiSQAo+MG0cHO7oXxjHnxQ6W3G49DcZJN6NRaqnOgomKVYDqIay6BX588tpYEU/aj0Qz6XgJToNeAsnoQdTUHCdZmnMr3IbhZh3mzvgKrFblY5GcTHpR4jSpF82nMnXdbNUdUIliL6v4AZF1Dtkao9+62UjfbhBV/eZpoxnhwx1FGglNyyyWrBRKZRYX3hXlJTJ4F4G+g2CzGruI4eqWWaEP3X9287ZjzFFs35C8Oy6Ro5fiTfBBE0fAcQwMCcf5o/2zkb84gorW4="
+        distributions: "sdist"
+        skip_existing: true
+        on:
+          tags: true
