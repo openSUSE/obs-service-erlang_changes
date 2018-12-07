@@ -1,0 +1,7 @@
+<service name="erlang_changes">
+	<summary>Extract changelog from Erlang/OTP release</summary>
+	<description>Extract changelog from Erlang/OTP release.</description>
+	<parameter name="otp_sources">
+		<description>Path to OTP/Erlang sources tarball.</description>
+	</parameter>
+</service>

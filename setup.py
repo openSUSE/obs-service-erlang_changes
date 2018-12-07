@@ -8,5 +8,10 @@ setup(name='obs-service-erlang_changes',
 	author_email='matwey.kornilov@gmail.com',
 	license='GPL-2.0',
 	packages=['erlang_changes'],
-	test_suite = 'tests',
+	test_suite='tests',
+	data_files=[
+		('/usr/lib/obs/service', [
+			'service/erlang_changes',
+			'service/erlang_changes.service']),
+	],
 	zip_safe=False)
