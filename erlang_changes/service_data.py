@@ -1,5 +1,10 @@
 import lxml.etree as ET
 
+try:
+	FileNotFoundError
+except NameError:
+	FileNotFoundError = IOError
+
 class ServiceDataEmpty(Exception):
 	pass
 

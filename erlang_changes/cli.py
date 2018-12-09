@@ -5,6 +5,11 @@ import erlang_changes
 from erlang_changes.changes import Changes
 from erlang_changes.service_data import ServiceData, ServiceDataEmpty
 
+try:
+	FileNotFoundError
+except NameError:
+	FileNotFoundError = IOError
+
 parser = argparse.ArgumentParser(prog='otp-service_erlang_changes')
 parser.add_argument('--otp_sources', metavar='FILENAME', help='Path to OTP/Erlang sources tarball', required=True)
 parser.add_argument('--outdir', help='osc service parameter for internal use only', required=True)
