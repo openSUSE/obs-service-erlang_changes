@@ -1,3 +1,4 @@
+include pylintrc
 include service/erlang_changes
 include service/erlang_changes.service
 recursive-include tests *.py
