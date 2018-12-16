@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(name='obs-service-erlang_changes',
 	version='0.1.0',
-	description='',
+	description='Erlang changelog formatting OBS service',
 	url='http://github.com/matwey/obs-service-erlang_changes',
 	author='Matwey V. Kornilov',
 	author_email='matwey.kornilov@gmail.com',
