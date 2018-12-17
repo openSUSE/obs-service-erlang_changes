@@ -28,6 +28,7 @@ def execute_from_commandline(argv=None):
 		servicedata = ServiceData(servicedata_filename)
 	except (ServiceDataEmpty, FileNotFoundError):
 		servicedata = ServiceData.init_servicedata(servicedata_filename, otp_version)
+		servicedata.write(servicedata_filename)
 
 	prev_otp_version = servicedata.otp_version
 
