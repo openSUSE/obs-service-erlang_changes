@@ -2,7 +2,8 @@ import os.path
 import re
 import tarfile
 import lxml.etree as ET
-import erlang_changes
+from erlang_changes.otp_versions_table import OTPVersionsTable
+from erlang_changes.notes_xml import NotesXML
 
 class DTDResolver(ET.Resolver):
 	dtd_paths = ["lib/erl_docgen/priv/dtd", "lib/erl_docgen/priv/dtd_man_entities"]
@@ -50,7 +51,7 @@ class OTPSrc(object):
 		root_name = filenames[0]
 
 		otp_version = otp_src.extractfile("{}/OTP_VERSION".format(root_name)).read().decode('ascii').strip()
-		otp_versions_table = erlang_changes.OTPVersionsTable.from_file(otp_src.extractfile("{}/otp_versions.table".format(root_name)))
+		otp_versions_table = OTPVersionsTable.from_file(otp_src.extractfile("{}/otp_versions.table".format(root_name)))
 		apps = []
 
 		parser = ET.XMLParser(load_dtd=True)
@@ -60,7 +61,7 @@ class OTPSrc(object):
 			app_match = OTPSrc._notes_xml_re.search(x)
 			if not app_match:
 				continue
-			apps.append((app_match.group(1), erlang_changes.NotesXML.from_xml(otp_src.extractfile(x), parser=parser)))
+			apps.append((app_match.group(1), NotesXML.from_xml(otp_src.extractfile(x), parser=parser)))
 
 		return OTPSrc(otp_version, otp_versions_table, apps)
 
