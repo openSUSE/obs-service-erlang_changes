@@ -18,7 +18,7 @@ parser.add_argument('--outdir', help='osc service parameter for internal use onl
 def execute_from_commandline(argv=None):
 	args = parser.parse_args(argv)
 
-	otp_src_filename = glob.glob(args.otp_sources)[0]
+	otp_src_filename = sorted(glob.glob(args.otp_sources), reverse=True)[0]
 	otp_src = erlang_changes.OTPSrc.from_file(otp_src_filename)
 
 	otp_version = otp_src.otp_version
