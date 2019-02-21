@@ -21,7 +21,9 @@ class NotesXML(object):
 				continue
 
 			version = version_match.group(0)
-			entries = [" ".join("".join(y.itertext()).split()) for y in itertools.chain.from_iterable([x.findall("./section[title='{}']/list/item/p[1]".format(title)) for title in NotesXML._title_list])]
+			entries = []
+			for item in itertools.chain.from_iterable([x.findall("./section[title='{}']/list/item[p]".format(title)) for title in NotesXML._title_list]):
+				entries.append(" ".join(itertools.chain.from_iterable(["".join(y.itertext()).split() for y in item.xpath("./p[position()<last()]")])))
 
 			change_list.append((version, entries))
 
