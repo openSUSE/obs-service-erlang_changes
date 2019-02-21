@@ -11,9 +11,17 @@ try:
 except NameError:
 	FileNotFoundError = IOError
 
+class MajorUpdateRequested(Exception):
+	def __init__(self, prev_version, version):
+		message = "Major update from {} to {} is not supported.".format(prev_version, version)
+		super(MajorUpdateRequested, self).__init__(message)
+
 parser = argparse.ArgumentParser(prog='otp-service_erlang_changes')
 parser.add_argument('--otp_sources', metavar='FILENAME', help='Path to OTP/Erlang sources tarball', required=True)
 parser.add_argument('--outdir', help='osc service parameter for internal use only', required=True)
+
+def major_version(version):
+	return version.split(".")[0]
 
 def execute_from_commandline(argv=None):
 	args = parser.parse_args(argv)
@@ -36,6 +44,9 @@ def execute_from_commandline(argv=None):
 
 	if prev_otp_version == otp_version:
 		return
+
+	if major_version(prev_otp_version) != major_version(otp_version):
+		raise MajorUpdateRequested(prev_otp_version, otp_version)
 
 	new_changes = Changes.from_otp_src(otp_src, prev_otp_version)
 	for path, changes in Changes.find_changes():
