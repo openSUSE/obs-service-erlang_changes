@@ -1,4 +1,12 @@
 from setuptools import setup
+from setuptools.command.install import install
+
+OBS_SERVICE_PATH='/usr/lib/obs/service'
+
+class InstallCmd(install, object):
+	def finalize_options(self):
+		self.install_scripts = OBS_SERVICE_PATH
+		super(InstallCmd, self).finalize_options()
 
 setup(name='obs-service-erlang_changes',
 	version='0.1.0',
@@ -9,9 +17,14 @@ setup(name='obs-service-erlang_changes',
 	license='GPL-2.0',
 	packages=['erlang_changes'],
 	test_suite='tests',
+	entry_points={
+		'console_scripts': ['erlang_changes = erlang_changes.cli:execute_from_commandline']
+	},
 	data_files=[
-		('/usr/lib/obs/service', [
-			'service/erlang_changes',
-			'service/erlang_changes.service']),
+		(OBS_SERVICE_PATH, ['service/erlang_changes.service']),
 	],
-	zip_safe=False)
+	zip_safe=False,
+	cmdclass={
+		'install': InstallCmd
+	}
+)
