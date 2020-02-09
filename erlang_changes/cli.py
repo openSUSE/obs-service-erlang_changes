@@ -16,7 +16,6 @@ class MajorUpdateRequested(Exception):
 		super(MajorUpdateRequested, self).__init__(message)
 
 parser = argparse.ArgumentParser(prog='otp-service_erlang_changes')
-parser.add_argument('--otp_sources', metavar='FILENAME', help='Path to OTP/Erlang sources tarball', required=True)
 parser.add_argument('--outdir', help='osc service parameter for internal use only', required=True)
 
 def major_version(version):
@@ -25,7 +24,7 @@ def major_version(version):
 def execute_from_commandline(argv=None):
 	args = parser.parse_args(argv)
 
-	otp_src_filename = sorted(glob.glob(args.otp_sources), reverse=True)[0]
+	otp_src_filename = 
 	otp_src = erlang_changes.OTPSrc.from_file(otp_src_filename)
 
 	otp_version = otp_src.otp_version
