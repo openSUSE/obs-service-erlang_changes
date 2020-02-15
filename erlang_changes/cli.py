@@ -3,7 +3,7 @@ import glob
 import os.path
 import shutil
 import subprocess
-import urllib
+from six.moves import urllib
 import erlang_changes
 from .changes import Changes
 from .spec import Spec
@@ -63,7 +63,7 @@ def execute_from_commandline(argv=None):
 		url = urllib.parse.urlparse(source)
 		if not url.scheme:
 			continue
-		filename = os.path.basename(url.path)
+		filename = os.path.basename(urllib.request.url2pathname(url.path))
 		if os.path.exists(filename):
 			continue
 		urllib.request.urlretrieve(source, filename)
