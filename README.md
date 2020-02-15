@@ -11,14 +11,9 @@ The service looks over `notes.xml` in Erlang/OTP release tarball and produces fo
 
 ```xml
 <services>
-	<service name="download_files" mode="disabled">
-		<param name="recompress">no</param>
-	</service>
+	<service name="erlang_changes" mode="disabled" />
 	<service name="refresh_patches" mode="disabled">
 		<param name="changesgenerate">enable</param>
-	</service>
-	<service name="erlang_changes" mode="disabled">
-		<param name="otp_sources">OTP-*.tar.gz</param>
 	</service>
 </services>
 ```
