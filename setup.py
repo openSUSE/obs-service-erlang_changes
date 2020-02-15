@@ -9,7 +9,7 @@ class InstallCmd(install, object):
 		super(InstallCmd, self).finalize_options()
 
 setup(name='obs-service-erlang_changes',
-	version='0.2-rc1',
+	version='0.2-rc2',
 	description='Erlang changelog formatting OBS service',
 	url='http://github.com/matwey/obs-service-erlang_changes',
 	author='Matwey V. Kornilov',
