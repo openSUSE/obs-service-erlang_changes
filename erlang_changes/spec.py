@@ -1,5 +1,4 @@
 import codecs
-import itertools
 import re
 import rpm
 

@@ -1,8 +1,6 @@
 import argparse
-import glob
 import os.path
 import shutil
-import subprocess
 from six.moves import urllib
 import erlang_changes
 from .changes import Changes
