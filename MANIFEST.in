@@ -1,6 +1,7 @@
-include README.md
 include LICENSE
+include README.md
 include pylintrc
+include pytest.ini
 include service/erlang_changes
 include service/erlang_changes.service
 recursive-include tests *.py
