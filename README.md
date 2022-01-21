@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/matwey/obs-service-erlang_changes.svg?branch=master)](https://travis-ci.org/matwey/obs-service-erlang_changes)
+[![Build Status](https://github.com/openSUSE/obs-service-erlang_changes/actions/workflows/python-package.yml/badge.svg)](https://github.com/openSUSE/obs-service-erlang_changes/actions/workflows/python-package.yml)
 [![PyPI version](https://badge.fury.io/py/obs-service-erlang_changes.svg)](https://badge.fury.io/py/obs-service-erlang_changes)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/matwey/obs-service-erlang_changes.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/matwey/obs-service-erlang_changes/context:python)
 
