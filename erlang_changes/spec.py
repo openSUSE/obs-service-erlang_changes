@@ -15,7 +15,10 @@ class Spec(object):
 
 	@property
 	def version(self):
-		return self._spec.sourceHeader[rpm.RPMTAG_VERSION].decode("ascii")
+		version_header = self._spec.sourceHeader[rpm.RPMTAG_VERSION]
+		if isinstance(version_header, (bytes, bytearray)):
+			return version_header.decode("ascii")
+		return version_header
 
 	@property
 	def filename(self):
