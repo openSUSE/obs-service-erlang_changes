@@ -1,7 +1,7 @@
 import argparse
 import os.path
 import shutil
-from six.moves import urllib
+import urllib
 import erlang_changes
 from .changes import Changes
 from .spec import Spec

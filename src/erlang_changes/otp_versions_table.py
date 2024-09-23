@@ -1,7 +1,6 @@
 from collections import OrderedDict
 import itertools
 import re
-from six import viewkeys
 
 class OTPVersionsTable(object):
 	_app_re = re.compile(r'(\w+)-((\d+)(\.\d+)*)')
@@ -51,8 +50,8 @@ class OTPVersionsTable(object):
 		apps = self._applications[idx]
 		apps_prev = self._applications[idx+1] if (idx+1) < len(self._applications) else dict([])
 
-		keys = viewkeys(apps)
-		keys_prev = viewkeys(apps_prev)
+		keys = apps.keys()
+		keys_prev = apps_prev.keys()
 
 		keys_deleted = keys_prev - keys
 		keys_added = keys - keys_prev
