@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "obs-service-erlang_changes"
+version = "0.2.1"
+description = "Erlang changelog formatting OBS service"
+readme = "README.md"
+authors = [
+  {name = "Matwey V. Kornilov", email = "matwey.kornilov@gmail.com"},
+]
+license = { text = "GPL-2.0" }
+dependencies = [
+  "lxml",
+  "rpm",
+]
+requires-python = ">=3.7"
+
+[project.scripts]
+erlang_changes = "erlang_changes.cli:execute_from_commandline"
+
+[project.optional-dependencies]
+dev = [
+  "freezegun",
+  "pytest",
+]
+
+[project.urls]
+Repository = "https://github.com/openSUSE/obs-service-erlang_changes.git"
+Issues = "https://github.com/openSUSE/obs-service-erlang_changes/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.data-files]
+"/usr/lib/obs/service" = ["service/erlang_changes.service"]
