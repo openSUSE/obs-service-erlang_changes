@@ -1,9 +1,9 @@
 import unittest
 import io
 
-from erlang_changes import NotesXML
+from erlang_changes import Notes
 
-class TestNotesXML(unittest.TestCase):
+class TestNotes(unittest.TestCase):
 	def test_parse1(self):
 		s = u"""
 <chapter>
@@ -58,7 +58,7 @@ class TestNotesXML(unittest.TestCase):
 			["Feature 1"],
 		]
 
-		n = NotesXML.from_xml(io.StringIO(s))
+		n = Notes.from_xml(io.StringIO(s))
 
 		self.assertListEqual(list(n.app_versions), ["1.0.1", "1.0"])
 		self.assertListEqual(n["1.0.1"], ["Fix 1", "Fix 2 Another par", "Feature 2"])

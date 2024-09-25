@@ -16,7 +16,7 @@ dependencies = [
   "rpm",
   "requests",
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 
 [project.scripts]
 erlang_changes = "erlang_changes.cli:execute_from_commandline"
