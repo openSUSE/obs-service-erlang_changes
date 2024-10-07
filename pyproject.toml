@@ -13,8 +13,10 @@ authors = [
 license = { text = "GPL-2.0" }
 dependencies = [
   "lxml",
-  "rpm",
+  "mistune>=3",
+  "more_itertools",
   "requests",
+  "rpm",
 ]
 requires-python = ">=3.8"
 

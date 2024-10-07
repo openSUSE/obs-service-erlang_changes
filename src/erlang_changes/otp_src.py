@@ -43,6 +43,7 @@ class DTDResolver(ET.Resolver):
 
 class OTPSrc(object):
 	_notes_xml_re = re.compile(r'(\w+)/doc/src/notes\.xml$')
+	_notes_md_re = re.compile(r'(\w+)/doc/notes\.md$')
 
 	@staticmethod
 	def from_file(otp_sources_filename):
@@ -55,7 +56,10 @@ class OTPSrc(object):
 
 		parser = ET.XMLParser(load_dtd=True)
 		parser.resolvers.add(DTDResolver(root_name, otp_src))
-		apps = [(m.group(1), Notes.from_xml(otp_src.extractfile(x), parser=parser)) for x in filenames if (m := OTPSrc._notes_xml_re.search(x))]
+
+		apps_xml = [(m.group(1), Notes.from_xml(otp_src.extractfile(x), parser=parser)) for x in filenames if (m := OTPSrc._notes_xml_re.search(x))]
+		apps_md = [(m.group(1), Notes.from_md(otp_src.extractfile(x))) for x in filenames if (m := OTPSrc._notes_md_re.search(x))]
+		apps = apps_xml + apps_md
 
 		return OTPSrc(otp_version, otp_versions_table, apps)
 
