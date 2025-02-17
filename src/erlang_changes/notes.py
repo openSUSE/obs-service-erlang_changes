@@ -1,10 +1,33 @@
 import re
 from collections import OrderedDict
 import itertools
-import more_itertools
 import mistune
 from mistune.renderers.markdown import MarkdownRenderer
 import lxml.etree as ET
+
+
+def unfold(iterable, headerfun):
+	sections = []
+	stack = [sections]
+
+	for item in iterable:
+
+		if (level := headerfun(item)) is not None:
+			current_level = len(stack) - 1
+
+			if current_level >= level:
+				drop = current_level - level + 1
+				stack = stack[:-drop]
+
+			stack[-1].append([])
+			stack.append(stack[-1][-1])
+			for _ in range(current_level, level - 1):
+				stack[-1].append([])
+				stack.append(stack[-1][-1])
+
+		stack[-1].append(item)
+
+	return sections
 
 
 class PlainRenderer(MarkdownRenderer):
@@ -26,17 +49,10 @@ class PlainRenderer(MarkdownRenderer):
 	def softbreak(self, token, state):
 		return ' '
 
+
 class Notes(object):
 	_VERSION_RE = re.compile(r'((\d+)(\.\d+)*)$')
 	_TITLE_LIST = ['Fixed Bugs and Malfunctions', 'Improvements and New Features', 'Known Bugs and Problems']
-
-	@staticmethod
-	def _is_md_version_header(token):
-		return token['type'] == 'heading' and int(token['attrs']['level']) == 2
-
-	@staticmethod
-	def _is_md_changes_header(token):
-		return token['type'] == 'heading' and int(token['attrs']['level']) == 3
 
 	@staticmethod
 	def from_md(source):
@@ -45,15 +61,14 @@ class Notes(object):
 		state = mistune.core.BlockState()
 
 		ast = markdown(source.read().decode("utf-8"))
+		ast = unfold(ast, lambda tok: tok['attrs']['level'] if tok['type'] == 'heading' else None)
+
+		islist = lambda tok: isinstance(tok, list)
+		sections = next(filter(islist, ast))
 
 		change_list = []
-		for section in more_itertools.split_before(ast, Notes._is_md_version_header):
-			head, *tail = section
-			if head['type'] != 'heading':
-				continue
-
-			heading = renderer.render_children(head, state)
-
+		for section in filter(islist, sections):
+			heading = renderer.render_children(section[0], state)
 			version_match = Notes._VERSION_RE.search(heading)
 			if not version_match:
 				continue
@@ -61,16 +76,18 @@ class Notes(object):
 			version = version_match.group(0)
 			changes = []
 
-			headings_and_lists = filter(lambda token: token['type'] in ['heading', 'list'], tail)
-			split_headings_and_lists = more_itertools.split_before(headings_and_lists, Notes._is_md_changes_header)
-			changes_lists = more_itertools.filter_map(lambda tokens: tokens[1:] if (tokens[0]['type'] == 'heading'
-				and renderer.render_children(tokens[0], state).strip() in Notes._TITLE_LIST) else None, split_headings_and_lists)
-			changes_lists_flatten = itertools.chain.from_iterable(changes_lists)
-			changes_items = map(lambda token: token['children'], changes_lists_flatten)
-			changes_items_flatten = itertools.chain.from_iterable(changes_items)
-			text_changes = more_itertools.filter_map(lambda token: ''.join(renderer([token['children'][0],], state).splitlines()) if len(token['children']) else None, changes_items_flatten)
+			for subsection in filter(islist, section):
+				heading = renderer.render_children(subsection[0], state)
+				if not heading in Notes._TITLE_LIST:
+					continue
 
-			change_list.append((version, list(text_changes)))
+				for tok in filter(lambda tok: tok['type'] == 'list', subsection):
+
+					for item in tok['children']:
+						text = renderer([item['children'][0]], state).strip()
+						changes.append(text)
+
+			change_list.append((version, list(changes)))
 
 		return Notes(change_list)
 
