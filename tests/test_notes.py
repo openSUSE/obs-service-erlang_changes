@@ -104,7 +104,8 @@ Ship that
 - Feature *1*
 
   Skip this
-		"""
+
+-"""
 
 		slice1_exp = [
 			["Fix 1", "Fix 2 Another line", "Feature 2 3"],

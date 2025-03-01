@@ -84,6 +84,9 @@ class Notes(object):
 				for tok in filter(lambda tok: tok['type'] == 'list', subsection):
 
 					for item in tok['children']:
+						if not ('children' in item and len(item['children'])):
+							continue
+
 						text = renderer([item['children'][0]], state).strip()
 						changes.append(text)
 
