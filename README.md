@@ -4,7 +4,7 @@
 # erlang_changes (OBS service)
 This is the git repository for obs-service-erlang_changes, which provides [erlang](https://www.erlang.org/) changelog formating service for the [Open Build Service](http://openbuildservice.org/).
 
-The service looks over `notes.xml` in Erlang/OTP release tarball and produces formatted `erlang.changes` file for RPM packaging.
+The service looks over `notes.xml` or `notes.md` in Erlang/OTP release tarball and produces formatted `erlang.changes` file for RPM packaging.
 
 [![asciicast](https://asciinema.org/a/707030.svg)](https://asciinema.org/a/707030?autoplay=1)
 
