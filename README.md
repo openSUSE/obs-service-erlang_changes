@@ -6,6 +6,8 @@ This is the git repository for obs-service-erlang_changes, which provides [erlan
 
 The service looks over `notes.xml` in Erlang/OTP release tarball and produces formatted `erlang.changes` file for RPM packaging.
 
+[![asciicast](https://asciinema.org/a/707030.svg)](https://asciinema.org/a/707030?autoplay=1)
+
 ## `_service` example
 
 ```xml
