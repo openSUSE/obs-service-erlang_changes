@@ -1,4 +1,5 @@
 import argparse
+import os
 import os.path
 import shutil
 import urllib
@@ -37,6 +38,17 @@ def get_spec_sources(filename = ERLANG_SPEC_FILENAME):
 def major_version(version):
 	return version.split(".")[0]
 
+def get_changes_author():
+	realname, mailaddr = os.getenv('VC_REALNAME'), os.getenv('VC_MAILADDR')
+
+	if mailaddr and realname:
+		return "{} <{}>".format(realname, mailaddr)
+
+	if mailaddr:
+		return mailaddr
+
+	return None
+
 parser = argparse.ArgumentParser(prog='otp-service_erlang_changes')
 parser.add_argument('--outdir', help='osc service parameter for internal use only', required=True)
 
@@ -72,7 +84,8 @@ def execute_from_commandline(argv=None):
 	if otp_version != otp_src.otp_version:
 		raise OTPVersionMismatch(otp_version, otp_src.otp_version)
 
-	new_changes = Changes.from_otp_src(otp_src, prev_otp_version)
+	author = get_changes_author()
+	new_changes = Changes.from_otp_src(otp_src, prev_otp_version, author = author)
 	for path, changes in Changes.find_changes():
 		tmp_changes = os.path.join(args.outdir, changes)
 		shutil.copyfile(os.path.join(path, changes), tmp_changes)
