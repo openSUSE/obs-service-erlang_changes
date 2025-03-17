@@ -5,7 +5,7 @@ import os
 import os.path
 import textwrap
 
-DEFAULT_AUTHOR = 'opensuse-packaging@opensuse.org'
+DEFAULT_AUTHOR = 'obs-service-tar-scm@invalid'
 
 class Changes(object):
 	wrapper = textwrap.TextWrapper(width=67, initial_indent='  * ', subsequent_indent='    ')
