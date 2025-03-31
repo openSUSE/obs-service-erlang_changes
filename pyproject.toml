@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "obs-service-erlang_changes"
-version = "0.3.1"
+version = "0.3.2"
 description = "Erlang changelog formatting OBS service"
 readme = "README.md"
 authors = [
